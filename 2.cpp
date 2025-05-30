@@ -1,65 +1,73 @@
 #include <iostream>
-#include <cmath>
-#include <limits>
-#include <iomanip>
-
+#include <cmath> // Для sqrt и pow
+#include <limits> // Для numeric_limits
 using namespace std;
 
-// Функция для безопасного ввода чисел
-double getValidInput(const string& prompt) {
-    double value;
-    cout << prompt;
-    if (cin >> value && value > 0) {
-        return value;
-    }
-    else {
-        cout << "Ошибка: введено некорректное значение. Завершение программы.\n";
-        exit(1);
-    }
-}
+/**
+ * @brief Считывает значение с клавиатуры с проверкой ввода
+ * @return Введённое значение
+ */
+double getValue();
 
-// Функция для вычисления третьей стороны по теореме косинусов
-double calculateThirdSide(double a, double b, double angleRad) {
-    return sqrt(pow(a, 2) + pow(b, 2) - 2 * a * b * cos(angleRad));
-}
+/**
+ * @brief Проверяет, что значение является числом
+ * @return Введённое значение
+ */
+void checkValue(const double value);
 
-// Функция для вычисления площади треугольника
-double calculateArea(double a, double b, double angleRad) {
-    return 0.5 * a * b * sin(angleRad);
-}
+/**
+ * @brief Вычисляет расстояние между двумя точками
+ * @param x1 - координата x первой точки
+ * @param y1 - координата y первой точки
+ * @param x2 - координата x второй точки
+ * @param y2 - координата y второй точки
+ * @return Расстояние между точками
+ */
+double calculateDistance(const double x1,const  double y1,const  double x2,const double y2);
 
-// Функция для вычисления радиуса описанной окружности
-double calculateCircumradius(double a, double b, double c, double area) {
-    return (a * b * c) / (4 * area);
-}
+/**
+ * @brief Точка входа в программу
+ * @return 0 - если программа выполнена корректно, иначе - 1
+ */
+int main()
+{
+    setlocale(LC_ALL, "rus");
 
-int main() {
-    setlocale(LC_ALL, "Russian");
+    cout << "Введите координаты первой точки (x1, y1):" << endl;
+    double x1 = getValue();
+    double y1 = getValue();
 
-    // Ввод данных с проверкой
-    cout << "Введите данные треугольника:\n";
-    double a = getValidInput("Сторона a = ");
-    double b = getValidInput("Сторона b = ");
-    double angle = getValidInput("Угол между сторонами (в градусах) = ");
+   cout << "Введите координаты второй точки (x2, y2):" << endl;
+    double x2 = getValue();
+    double y2 = getValue();
 
-    // Преобразование угла в радианы
-    double angleRad = angle * M_PI / 180.0;
-
-    // Вычисление третьей стороны
-    double c = calculateThirdSide(a, b, angleRad);
-
-    // Вычисление площади
-    double area = calculateArea(a, b, angleRad);
-
-    // Вычисление радиуса описанной окружности
-    double radius = calculateCircumradius(a, b, c, area);
-
-    // Вывод результатов
-    cout << fixed << setprecision(4);
-    cout << "\nРезультаты вычислений:\n";
-    cout << "Третья сторона (c) = " << c << endl;
-    cout << "Площадь треугольника = " << area << endl;
-    cout << "Радиус описанной окружности = " << radius << endl;
+    double distance = calculateDistance(x1, y1, x2, y2);
+    cout << "Расстояние между точками: " << distance << endl;
 
     return 0;
+}
+
+double getValue()
+{
+    double value;
+    if (!(cin >> value))
+    {
+        cout << "Некорректное значение" << endl;
+        abort();
+    }
+    return value;
+}
+
+void checkValue(const double value)
+{
+    if (value <= 0)
+    {
+        cout << "Значение должно быть больше нуля." << endl;
+        abort();
+    }
+}
+
+double calculateDistance(double x1, double y1, double x2, double y2)
+{
+    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
