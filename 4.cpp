@@ -24,7 +24,7 @@ int main() {
     cin >> step;
 
     // Проверка корректности ввода
-    if (start >= end) {
+    if (start > end) {
         cout << "Ошибка: начало интервала должно быть меньше конца!";
         return 1;
     }
@@ -41,11 +41,11 @@ int main() {
 
     // Табуляция функции
     cout << fixed << setprecision(2);
-    for (double x = start; x <= end + 1e-9; x += step) {
+    for (double x = start; x <= end + std::numeric_limits<double>::epsilon(); x += step) {
         cout << setw(8) << x << " | ";
 
         // Проверка области определения
-        if (x <= 0) {
+        if (x <= std::numeric_limits<double>::epsilon()) {
             cout << "не определено (x ≤ 0)\n";
             continue;
         }
