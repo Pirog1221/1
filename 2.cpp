@@ -31,6 +31,7 @@ double calculateDistance(const double x1,const  double y1,const  double x2,const
  */
 int main()
 {
+    int value=0;
     setlocale(LC_ALL, "rus");
 
     cout << "Введите координаты первой точки (x1, y1):" << endl;
