@@ -1,8 +1,24 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <limits>
+#include <string>
 
 using namespace std;
+
+// Функция для безопасного ввода числа с проверкой
+double getValidInput(const string& prompt) {
+    double value;
+    while (true) {
+        cout << prompt;
+        if (cin >> value) {
+            return value;
+        }
+        cout << "Ошибка ввода! Пожалуйста, введите число.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+}
 
 // Функция для вычисления значения y
 double calculateY(double x) {
@@ -12,24 +28,20 @@ double calculateY(double x) {
 int main() {
     setlocale(LC_ALL, "Russian");
 
-    // Ввод параметров табуляции
-    double start, end, step;
-
     cout << "Табуляция функции y = 3x - 4ln(x) - 5\n";
-    cout << "Введите начало интервала: ";
-    cin >> start;
-    cout << "Введите конец интервала: ";
-    cin >> end;
-    cout << "Введите шаг табуляции: ";
-    cin >> step;
 
-    // Проверка корректности ввода
+    // Ввод параметров с проверкой
+    double start = getValidInput("Введите начало интервала: ");
+    double end = getValidInput("Введите конец интервала: ");
+    double step = getValidInput("Введите шаг табуляции: ");
+
+    // Проверка корректности введенных значений
     if (start > end) {
-        cout << "Ошибка: начало интервала должно быть меньше конца!";
+        cout << "Ошибка: начало интервала должно быть меньше или равно концу!\n";
         return 1;
     }
     if (step <= 0) {
-        cout << "Ошибка: шаг должен быть положительным!";
+        cout << "Ошибка: шаг должен быть положительным!\n";
         return 1;
     }
 
@@ -41,18 +53,26 @@ int main() {
 
     // Табуляция функции
     cout << fixed << setprecision(2);
-    for (double x = start; x <= end + std::numeric_limits<double>::epsilon(); x += step) {
+    for (double x = start; x <= end + numeric_limits<double>::epsilon(); x += step) {
         cout << setw(8) << x << " | ";
 
-        // Проверка области определения
-        if (x <= std::numeric_limits<double>::epsilon()) {
+        // Проверка области определения с учетом точности double
+        if (x <= numeric_limits<double>::epsilon()) {
             cout << "не определено (x ≤ 0)\n";
             continue;
         }
 
         // Вычисление и вывод значения функции
-        double y = calculateY(x);
-        cout << setw(10) << setprecision(6) << y << endl;
+        try {
+            double y = calculateY(x);
+            if (isnan(y) {
+                cout << "не определено\n";
+            } else {
+                cout << setw(10) << setprecision(6) << y << endl;
+            }
+        } catch (...) {
+            cout << "ошибка вычисления\n";
+        }
     }
 
     return 0;
