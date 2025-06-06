@@ -64,7 +64,7 @@ int main()
 
 int getValidN()
 {
-    int n;
+    int n=0;
     cout << "Введите значение n: ";
     cin >> n;
 
@@ -79,7 +79,7 @@ int getValidN()
 
 double getValidE()
 {
-    double e;
+    double e=0;
     cout << "Введите значение e: ";
     cin >> e;
 
@@ -98,7 +98,7 @@ double sumFirstN(const int n)
     double current = a0;
     double sum = current;
 
-    for (int k = 0; k <= n - 1; ++k)
+    for (int k = 0; k = n - 1; ++k)
     {
         current *= recur(k);
         sum += current;
