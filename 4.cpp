@@ -12,17 +12,8 @@ using namespace std;
  * @return Введенное число
  * @note Завершает программу при некорректном вводе
  */
-double getValidInput(const string& prompt) {
-    double value = 0.0;  // Явная инициализация
-    cout << prompt;
-    
-    if (!(cin >> value)) {
-        cerr << "Ошибка ввода! Программа завершена.\n";
-        exit(EXIT_FAILURE);
-    }
-    
-    return value;
-}
+double getValidInput(const string& prompt) 
+
 
 /**
  * @brief Вычисляет значение функции y = 3x - 4ln(x) - 5
@@ -30,10 +21,7 @@ double getValidInput(const string& prompt) {
  * @return Значение функции
  * @note Для x ≤ 0 возвращает NAN
  */
-double calculateY(double x) {
-    if (x <= 0) return NAN;
-    return 3 * x - 4 * log(x) - 5;
-}
+double calculateY(double x) 
 
 int main() {
     setlocale(LC_ALL, "Russian");
@@ -75,4 +63,22 @@ int main() {
     }
 
     return EXIT_SUCCESS;
+}
+
+
+double getValidInput(const string& prompt) {
+    double value = 0.0;  // Явная инициализация
+    cout << prompt;
+    
+    if (!(cin >> value)) {
+        cerr << "Ошибка ввода! Программа завершена.\n";
+        exit(EXIT_FAILURE);
+    }
+    
+    return value;
+}
+
+double calculateY(double x) {
+    if (x <= 0) return NAN;
+    return 3 * x - 4 * log(x) - 5;
 }
