@@ -131,10 +131,23 @@ int main()
 
     cout << "Введите количество элементов для реверса: ";
     int k = getNumber();
-    reverseFirstKElements(arr, k);
-    cout << "Массив после реверса первых " << k << " элементов: ";
-    printArray(arr, n);
+    std::vector<int> arrCopy = arr;
+    reverseFirstKElements(arrCopy, k);
 
+    std::cout << "Массив после реверса первых " << k << " элементов:\n";
+    for (int num : arrCopy) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Исходный массив:\n";
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+    }
 
     cout << "Введите число для проверки произведения соседних элементов: ";
     int product = getNumber();
@@ -164,7 +177,7 @@ void checkN(const int n)
 size_t getSize()
 {
     cout << "Введите размер массива: ";
-    int n;
+    int n=0;
     cin >> n;
     checkN(n);
     return static_cast<size_t>(n);
@@ -172,7 +185,7 @@ size_t getSize()
 
 int getNumber()
 {
-    int number;
+    int number=0;
     cin >> number;
     if (cin.fail())
     {
@@ -204,7 +217,7 @@ void fillArrayRandom(int* arr, const int n, const int min, const int max)
 
 void checkRange(const int min, const int max)
 {
-    if (min >= max)
+    if (min > max)
     {
         cout << "Введен неправильный диапазон" << endl;
         abort();
