@@ -9,13 +9,6 @@ using namespace std;
 double get_value();
 
 /**
- * @brief Рекурсивно вычисляет факториал числа
- * @param n Число для вычисления факториала
- * @return Факториал числа n
- */
-double factorial_recursive(int n);
-
-/**
  * @brief Рекурсивно вычисляет сумму ряда
  * @param k Текущий индекс (начинается с 1)
  * @param n Максимальный индекс
@@ -30,6 +23,13 @@ double calculate_first_n_series_sum_recursive(int k, int n, double sum);
  * @param sum Накопленная сумма
  */
 double calculate_series_sum_above_epsilon_recursive(int k, double eps, double sum);
+
+/**
+ * @brief Вычисляет значение члена ряда для заданного k
+ * @param k Индекс члена ряда
+ * @return Значение k-го члена ряда
+ */
+double calculate_term(int k);
 
 /**
  * @brief Точка входа в программу
@@ -69,13 +69,11 @@ double get_value()
   return value;
 }
 
-double factorial_recursive(int n)
+double calculate_term(int k)
 {
-  if (n == 0 || n == 1)
-  {
-    return 1.0;
-  }
-  return n * factorial_recursive(n - 1);
+  double sign = (k % 2 == 0) ? 1.0 : -1.0;  // (-1)^k
+  double denominator = (k + 1.0) * (k + 2.0) * (k + 3.0) * (k + 4.0);
+  return sign / denominator;
 }
 
 double calculate_first_n_series_sum_recursive(int k, int n, double sum)
@@ -85,11 +83,7 @@ double calculate_first_n_series_sum_recursive(int k, int n, double sum)
     return sum;
   }
 
-  double numerator = factorial_recursive(k);
-  double denominator = factorial_recursive(4 + k);
-  double sign = pow(-1, k);
-  double term = sign * (numerator / denominator);
-
+  double term = calculate_term(k);
   sum += term;
 
   return calculate_first_n_series_sum_recursive(k + 1, n, sum);
@@ -97,10 +91,7 @@ double calculate_first_n_series_sum_recursive(int k, int n, double sum)
 
 double calculate_series_sum_above_epsilon_recursive(int k, double eps, double sum)
 {
-  double numerator = factorial_recursive(k);
-  double denominator = factorial_recursive(4 + k);
-  double sign = pow(-1, k);
-  double term = sign * (numerator / denominator);
+  double term = calculate_term(k);
 
   if (fabs(term) < eps)
   {
