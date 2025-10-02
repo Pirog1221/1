@@ -77,7 +77,7 @@ void print_sum_of_negative_elements_multiple_of_10(const int *arr, const int n);
  * @param n Размер массива
  * @param k Количество элементов для обратного порядка
  */
-void print_reversed_first_k_elements(const int *arr, const int n, const int k);
+void print_copy_arr_reversed_first_k_elements(const int *arr, const int n, const int k);
 
 /**
  * @brief Определяет, есть ли пара соседних элементов с произведением, равным заданному числу
@@ -126,14 +126,20 @@ int main()
   print_arr(arr, n);
 
   print_sum_of_negative_elements_multiple_of_10(arr, n);
+
   cout << "Введите число k: ";
   int k = get_value();
-  print_reversed_first_k_elements(arr, n, k);
+  cout << "Копия массива с заменёнными элементами в обратном порядке первых: " << endl;
+  int *reversed_arr = new int[n];
+  copy(arr, arr + n, reversed_arr);
+  print_copy_arr_reversed_first_k_elements(reversed_arr, n, k);
+
   cout << "Введите произведение: ";
   int target = get_value();
   print_first_pair_with_product(arr, n, target);
 
   delete[] arr;
+  delete[] reversed_arr;
 
   return 0;
 }
@@ -236,17 +242,13 @@ void print_sum_of_negative_elements_multiple_of_10(const int *arr, const int n)
   }
 }
 
-void print_reversed_first_k_elements(const int *arr, const int n, const int k)
+void print_copy_arr_reversed_first_k_elements(const int *arr, const int n, const int k)
 {
-  int *new_arr = new int[n];
-  copy(arr, arr + n, new_arr);
-
   for (int i = 0; i < k / 2; i++)
   {
     swap(new_arr[i], new_arr[k - 1 - i]);
   }
 
-  cout << "Копия массива с заменёнными элементами в обратном порядке первых: " << endl;
   print_arr(new_arr, n);
 
   delete[] new_arr;
