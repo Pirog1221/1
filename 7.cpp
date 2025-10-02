@@ -141,12 +141,26 @@ int main()
   print_arr(arr, rows, cols);
 
   cout << "Копия массива с замененными максимальными элементами на 0:" << endl;
-  replace_max_with_zero(arr, rows, cols);
+  int **replaced_arr = new int *[rows];
+  for (size_t i = 0; i < rows; ++i)
+  {
+    replaced_arr[i] = new int[cols];
+    copy(arr[i], arr[i] + cols, replaced_arr[i]);
+  }
+  replace_max_with_zero(replaced_arr, rows, cols);
 
   cout << "Копия массива со строками из 0, где первый элемент делится на 3" << endl;
-  insert_zero_rows_before_divisible_by_3(arr, rows, cols);
+  int **insert_zero_arr = new int *[rows];
+  for (size_t i = 0; i < rows; ++i)
+  {
+    insert_zero_arr[i] = new int[cols];
+    copy(arr[i], arr[i] + cols, insert_zero_arr[i]);
+  }
+  insert_zero_rows_before_divisible_by_3(insert_zero_arr, rows, cols);
 
   del_arr(arr, rows);
+  del_arr(replaced_arr, rows);
+  del_arr(insert_zero_arr);
 
   return 0;
 }
@@ -245,13 +259,6 @@ void print_arr(int **arr, const int rows, const int cols)
 
 void replace_max_with_zero(int **arr, int const rows, int const cols)
 {
-  int **new_arr = new int *[rows];
-  for (size_t i = 0; i < rows; ++i)
-  {
-    new_arr[i] = new int[cols];
-    copy(arr[i], arr[i] + cols, new_arr[i]);
-  }
-
   for (size_t i = 0; i < rows; i++)
   {
     if (cols > 0)
@@ -287,7 +294,7 @@ void insert_zero_rows_before_divisible_by_3(int **arr, int const rows, int const
   }
 
   int new_rows = rows + additional_rows;
-  int **new_arr = new int*[new_rows];
+  int **new_arr = new int *[new_rows];
 
   int new_index = 0;
   for (int i = 0; i < rows; i++)
