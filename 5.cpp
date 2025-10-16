@@ -14,7 +14,7 @@ double get_value();
  * @param n Максимальный индекс
  * @param sum Накопленная сумма
  */
-double calculate_first_n_series_sum_recursive(int k, int n, double sum);
+double calculate_first_n_series_sum_recursive(int k, const int n, double sum);
 
 /**
  * @brief Рекурсивно вычисляет сумму всех членов ряда, по модулю не меньших заданного числа e
@@ -22,7 +22,7 @@ double calculate_first_n_series_sum_recursive(int k, int n, double sum);
  * @param eps Заданная точность
  * @param sum Накопленная сумма
  */
-double calculate_series_sum_above_epsilon_recursive(int k, double eps, double sum);
+double calculate_series_sum_above_epsilon_recursive(int k, const double eps, double sum);
 
 /**
  * @brief Вычисляет значение члена ряда для заданного k
@@ -76,7 +76,7 @@ double calculate_term(int k)
   return sign / denominator;
 }
 
-double calculate_first_n_series_sum_recursive(int k, int n, double sum)
+double calculate_first_n_series_sum_recursive(int k, const int n, double sum)
 {
   if (k > n)
   {
@@ -89,7 +89,7 @@ double calculate_first_n_series_sum_recursive(int k, int n, double sum)
   return calculate_first_n_series_sum_recursive(k + 1, n, sum);
 }
 
-double calculate_series_sum_above_epsilon_recursive(int k, double eps, double sum)
+double calculate_series_sum_above_epsilon_recursive(int k, const double eps, double sum)
 {
   double term = calculate_term(k);
 
